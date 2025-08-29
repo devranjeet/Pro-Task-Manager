@@ -1,0 +1,103 @@
+<!-- templates/index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Task Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="light-theme">
+
+    <div class="app-container">
+        <!-- SIDEBAR FOR PROJECTS AND NAVIGATION -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Projects</h2>
+                <button id="add-project-btn" class="add-btn" title="Add New Project">+</button>
+            </div>
+            <ul id="project-list">
+                <!-- Projects will be dynamically inserted here -->
+            </ul>
+            <div class="sidebar-footer">
+                <button id="theme-toggle" class="theme-toggle-btn">
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.106a.75.75 0 010 1.06l-1.591 1.59a.75.75 0 11-1.06-1.06l1.59-1.59a.75.75 0 011.06 0zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.803 17.803a.75.75 0 01-1.06 0l-1.59-1.591a.75.75 0 111.06-1.06l1.59 1.59a.75.75 0 010 1.06zM12 21a.75.75 0 01-.75-.75v-2.25a.75.75 0 011.5 0v2.25a.75.75 0 01-.75-.75zM5.197 17.803a.75.75 0 010-1.06l1.59-1.59a.75.75 0 111.06 1.06l-1.59 1.59a.75.75 0 01-1.06 0zM3 12a.75.75 0 01.75-.75h2.25a.75.75 0 010 1.5H3.75A.75.75 0 013 12zM6.106 5.197a.75.75 0 011.06 0l1.59 1.59a.75.75 0 01-1.06 1.06L6.106 6.258a.75.75 0 010-1.06z"></path></svg>
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 004.463-.948a.75.75 0 01.819.162l.305.289a.75.75 0 01-.52.935A11.998 11.998 0 0112 21a12 12 0 01-9.528-18.282l.289.305z" clip-rule="evenodd"></path></svg>
+                </button>
+                <button id="export-csv" class="btn btn-secondary">Export All Tasks</button>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA FOR TASKS -->
+        <main class="main-content">
+            <header class="main-header">
+                <h1 id="project-title">All Tasks</h1>
+                <div class="toolbar">
+                    <input type="search" id="search-input" placeholder="Search tasks...">
+                    <select id="sort-select">
+                        <option value="due-date">Sort by Due Date</option>
+                        <option value="priority">Sort by Priority</option>
+                        <option value="creation-date">Sort by Creation</option>
+                    </select>
+                    <button id="add-task-btn-main" class="btn btn-primary">Add Task</button>
+                </div>
+            </header>
+            <ul id="task-list">
+                <!-- Tasks will be dynamically inserted here -->
+            </ul>
+        </main>
+    </div>
+
+    <!-- MODAL FOR ADDING/EDITING TASKS -->
+    <div id="task-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <form id="task-form">
+                <h2 id="modal-title">Add New Task</h2>
+                <input type="hidden" id="task-id">
+                
+                <div class="form-group">
+                    <label for="task-text">Task Name</label>
+                    <input type="text" id="task-text" required placeholder="e.g., Deploy feature to staging server">
+                </div>
+                
+                <div class="form-group">
+                    <label for="task-project">Project</label>
+                    <input type="text" id="task-project" list="project-datalist" required placeholder="e.g., Website Redesign">
+                    <datalist id="project-datalist"></datalist>
+                </div>
+
+                <div class="form-group-inline">
+                    <div class="form-group">
+                        <label for="task-due-date">Due Date</label>
+                        <input type="date" id="task-due-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-priority">Priority</label>
+                        <select id="task-priority" required>
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="task-notes">Notes (Markdown for code: ```)</label>
+                    <textarea id="task-notes" rows="4" placeholder="Add more details or a code snippet..."></textarea>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" id="modal-cancel-btn" class="btn btn-secondary">Cancel</button>
+                    <button type="submit" id="modal-save-btn" class="btn btn-primary">Save Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
