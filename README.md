@@ -42,12 +42,12 @@ You need to have Python 3 and `pip` installed on your system.
 
 1.  **Clone the repository:**
     ```sh
-    git clone https://github.com/your-username/pro-task-manager.git
+    git clone https://github.com/devranjeet/Pro-Task-Manager.git
     ```
 
 2.  **Navigate into the project directory:**
     ```sh
-    cd pro-task-manager
+    cd Pro-Task-Manager
     ```
 
 3.  **Create and activate a virtual environment (recommended):**
@@ -65,7 +65,7 @@ You need to have Python 3 and `pip` installed on your system.
 
 4.  **Install the required dependencies:**
     ```sh
-    pip install Flask
+    pip install -r requirements.txt
     ```
 
 5.  **Run the Flask application:**
